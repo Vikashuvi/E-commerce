@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, Typography, Grid, Container } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -15,20 +16,28 @@ const StyledCard = styled(Card)(({ theme }) => ({
 }));
 
 function Home() {
+  const navigate = useNavigate();
   const categories = [
     {
       title: 'Vegetables',
       image: 'https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&q=80',
+      path: '/vegetables',
     },
     {
       title: 'Fruits',
       image: 'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&q=80',
+      path: '/fruits',
     },
     {
       title: 'Groceries',
       image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80',
+      path: '/groceries',
     },
   ];
+
+  const handleCardClick = (path) => {
+    navigate(path);
+  };
 
   return (
     <Container sx={{ py: 8 }} maxWidth="lg">
@@ -48,7 +57,7 @@ function Home() {
       <Grid container spacing={4}>
         {categories.map((category) => (
           <Grid item key={category.title} xs={12} sm={6} md={4}>
-            <StyledCard sx={{ boxShadow: 3 }}>
+            <StyledCard sx={{ boxShadow: 3 }} onClick={() => handleCardClick(category.path)}>
               <div style={{ 
                 height: 280, 
                 backgroundImage: `url(${category.image})`,
