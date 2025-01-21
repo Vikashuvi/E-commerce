@@ -3,8 +3,10 @@ import { MdLocalOffer } from 'react-icons/md';
 import { FaLeaf } from 'react-icons/fa';
 import { FaStar } from 'react-icons/fa';
 import { toast, Toaster } from 'sonner';
+import { useCart } from './CartContext';
 
 function Vegetables() {
+  const { addToCart } = useCart();
   const vegetables = [
     {
       id: 1,
@@ -64,6 +66,7 @@ function Vegetables() {
   ];
 
   const handleAddToCart = (vegetable) => {
+    addToCart(vegetable);
     toast.success(`Added ${vegetable.name} to cart`, {
       position: 'bottom-right',
       duration: 2000,

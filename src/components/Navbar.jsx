@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiShoppingCart, FiUser, FiSearch, FiMenu, FiX } from 'react-icons/fi';
+import { useCart } from './CartContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const { getCartCount } = useCart();
+  const cartCount = getCartCount();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -52,11 +55,16 @@ const Navbar = () => {
 
           {/* Icons */}
           <div className="hidden md:flex items-center space-x-6">
-            <Link to="/cart" className="text-gray-600 hover:text-green-600 relative">
+            <Link
+              to="/cart"
+              className="relative text-gray-800 hover:text-green-600 transition-colors duration-200"
+            >
               <FiShoppingCart size={24} />
-              <span className="absolute -top-2 -right-2 bg-green-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-                0
-              </span>
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
             </Link>
             <Link to="/account" className="text-gray-600 hover:text-green-600">
               <FiUser size={24} />

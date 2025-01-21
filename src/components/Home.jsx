@@ -52,7 +52,7 @@ function Home() {
           color: 'green',
         }}
       >
-        Welcome to Our Store
+        Welcome to SwiftMart
       </Typography>
       <Grid container spacing={4}>
         {categories.map((category) => (

@@ -3,8 +3,10 @@ import { MdLocalOffer } from 'react-icons/md';
 import { FaLeaf } from 'react-icons/fa';
 import { FaStar } from 'react-icons/fa';
 import { toast, Toaster } from 'sonner';
+import { useCart } from './CartContext';
 
 function Fruit() {
+  const { addToCart } = useCart();
   const fruits = [
     {
       id: 1,
@@ -65,8 +67,9 @@ function Fruit() {
     }
   ];
 
-  const handleAddToCart = (fruits) => {
-    toast.success(`Added ${fruits.name} to cart`, {
+  const handleAddToCart = (fruit) => {
+    addToCart(fruit);
+    toast.success(`Added ${fruit.name} to cart`, {
       position: 'bottom-right',
       duration: 2000,
       className: 'bg-green-600 text-white',
@@ -100,21 +103,21 @@ function Fruit() {
         </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {fruits.map((fruits) => (
+          {fruits.map((fruit) => (
             <div
-              key={fruits.id}
+              key={fruit.id}
               className="bg-white rounded-lg shadow-md overflow-hidden relative flex flex-col h-[450px]"
             >
-              {fruits.discount && (
+              {fruit.discount && (
                 <div className="absolute top-2 right-2 z-10">
                   <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-100 text-red-800">
                     <MdLocalOffer className="mr-1" />
-                    {fruits.discount}
+                    {fruit.discount}
                   </span>
                 </div>
               )}
               
-              {fruits.organic && (
+              {fruit.organic && (
                 <div className="absolute top-2 left-2 z-10">
                   <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-green-100 text-green-800">
                     <FaLeaf className="mr-1" />
@@ -125,28 +128,28 @@ function Fruit() {
 
               <div className="h-[220px] overflow-hidden">
                 <img
-                  src={fruits.image}
-                  alt={fruits.name}
+                  src={fruit.image}
+                  alt={fruit.name}
                   className="w-full h-full object-cover"
                 />
               </div>
 
               <div className="p-4 flex flex-col flex-grow">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  {fruits.name}
+                  {fruit.name}
                 </h3>
                 <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-                  {fruits.description}
+                  {fruit.description}
                 </p>
-                <RatingStars rating={fruits.rating} />
+                <RatingStars rating={fruit.rating} />
                 <div className="mt-auto">
                   <div className="mb-4">
                     <span className="text-xl font-bold text-green-600">
-                      ₹{fruits.price}
+                      ₹{fruit.price}
                     </span>
                   </div>
                   <button
-                    onClick={() => handleAddToCart(fruits)}
+                    onClick={() => handleAddToCart(fruit)}
                     className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors duration-200"
                   >
                     Add to Cart
