@@ -8,7 +8,7 @@ function Vegetables() {
   const vegetables = [
     {
       id: 1,
-      name: 'Fresh Tomatoes',
+      name: 'Tomatoes',
       price: 29,
       image: 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?ixlib=rb-4.0.3',
       rating: 4.5,
@@ -18,7 +18,7 @@ function Vegetables() {
     },
     {
       id: 2,
-      name: 'Organic Carrots',
+      name: 'Carrots',
       price: 19,
       image: 'https://images.unsplash.com/photo-1447175008436-054170c2e979?ixlib=rb-4.0.3',
       rating: 4.0,
@@ -27,12 +27,39 @@ function Vegetables() {
     },
     {
       id: 3,
-      name: 'Fresh Broccoli',
+      name: 'Broccoli',
       price: 49,
       image: 'https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?ixlib=rb-4.0.3',
       rating: 4.2,
+        organic: true,
       discount: '15% off',
       description: 'Crisp and nutritious broccoli florets'
+    },
+    {
+      id: 4,
+      name: 'Potatoes',
+      price: 89,
+      image: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?ixlib=rb-4.0.3',
+      rating: 4.2,
+      organic: true,
+      discount: '12% off',
+      description: 'Fresh and flavorful potatoes'
+    },
+    {
+      id: 5,
+      name: 'Red Bell Peppers',
+      price: 69,
+      image: 'https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?ixlib=rb-4.0.3',
+      rating: 4.2,
+      description: 'healthy and delicious red bell peppers'
+    },
+    {
+      id: 6,
+      name: 'Betroots',
+      price: 89,
+      image: 'https://images.unsplash.com/photo-1593105544559-ecb03bf76f82?ixlib=rb-4.0.3',
+      rating: 4.2,
+      description: 'nutritious and delicious betroots'
     }
   ];
 
