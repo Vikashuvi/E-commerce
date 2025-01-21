@@ -84,9 +84,10 @@ const Navbar = () => {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
               <Link to="/" className="block px-3 py-2 text-gray-600 hover:text-green-600">Home</Link>
-              <Link to="/products" className="block px-3 py-2 text-gray-600 hover:text-green-600">Products</Link>
-              <Link to="/categories" className="block px-3 py-2 text-gray-600 hover:text-green-600">Categories</Link>
-              <Link to="/deals" className="block px-3 py-2 text-gray-600 hover:text-green-600">Deals</Link>
+              <Link to="/vegetables" className="block px-3 py-2 text-gray-600 hover:text-green-600">Vegetables</Link>
+              <Link to="/fruits" className="block px-3 py-2 text-gray-600 hover:text-green-600">Fruits</Link>
+              <Link to="/groceries" className="block px-3 py-2 text-gray-600 hover:text-green-600">Groceries</Link>
+              <Link to="/cart" className="block px-3 py-2 text-gray-600 hover:text-green-600">Cart</Link>
             </div>
           </div>
         )}
