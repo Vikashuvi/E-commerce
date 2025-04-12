@@ -83,6 +83,14 @@ function Vegetables() {
       image: 'https://images.unsplash.com/photo-1593105544559-ecb03bf76f82?ixlib=rb-4.0.3',
       rating: 4.2,
       description: 'nutritious and delicious betroots'
+    },
+    {
+      id: 6,
+      name: 'Betroots',
+      price: 89,
+      image: 'https://images.unsplash.com/photo-1593105544559-ecb03bf76f82?ixlib=rb-4.0.3',
+      rating: 4.2,
+      description: 'nutritious and delicious betroots'
     }
   ];
   */
