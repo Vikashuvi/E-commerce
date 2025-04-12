@@ -1,12 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdLocalOffer } from 'react-icons/md';
 import { FaLeaf } from 'react-icons/fa';
 import { FaStar } from 'react-icons/fa';
 import { toast, Toaster } from 'sonner';
 import { useCart } from './CartContext';
+import { useSearch } from './SearchContext';
+import { vegetables as vegetablesData } from '../data/ProductData';
 
 function Vegetables() {
   const { addToCart } = useCart();
+  const { searchQuery, isSearching } = useSearch();
+  const [filteredVegetables, setFilteredVegetables] = useState(vegetablesData);
+
+  // Filter vegetables based on search query
+  useEffect(() => {
+    if (searchQuery && !isSearching) {
+      const filtered = vegetablesData.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (item.category && item.category.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
+      setFilteredVegetables(filtered);
+    } else {
+      setFilteredVegetables(vegetablesData);
+    }
+  }, [searchQuery, isSearching]);
+
+  // Original data - now we're using the imported data instead
+  /*
   const vegetables = [
     {
       id: 1,
@@ -64,6 +85,7 @@ function Vegetables() {
       description: 'nutritious and delicious betroots'
     }
   ];
+  */
 
   const handleAddToCart = (vegetable) => {
     addToCart(vegetable);
@@ -100,8 +122,13 @@ function Vegetables() {
           Fresh Vegetables
         </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {vegetables.map((vegetable) => (
+        {searchQuery && filteredVegetables.length === 0 ? (
+          <div className="text-center py-8">
+            <p className="text-gray-600">No vegetables found matching your search.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredVegetables.map((vegetable) => (
             <div
               key={vegetable.id}
               className="bg-white rounded-lg shadow-md overflow-hidden relative flex flex-col h-[450px]"
@@ -114,7 +141,7 @@ function Vegetables() {
                   </span>
                 </div>
               )}
-              
+
               {vegetable.organic && (
                 <div className="absolute top-2 left-2 z-10">
                   <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-green-100 text-green-800">
@@ -156,7 +183,8 @@ function Vegetables() {
               </div>
             </div>
           ))}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
