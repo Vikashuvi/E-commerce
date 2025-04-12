@@ -72,7 +72,7 @@ const Navbar = () => {
                 </span>
               )}
             </Link>
-            <Link to="/account" className="text-gray-600 hover:text-green-600">
+            <Link to="/profile" className="text-gray-600 hover:text-green-600">
               <FiUser size={24} />
             </Link>
           </div>
@@ -94,6 +94,7 @@ const Navbar = () => {
               <Link to="/fruits" className="block px-3 py-2 text-gray-600 hover:text-green-600">Fruits</Link>
               <Link to="/groceries" className="block px-3 py-2 text-gray-600 hover:text-green-600">Groceries</Link>
               <Link to="/cart" className="block px-3 py-2 text-gray-600 hover:text-green-600">Cart</Link>
+              <Link to="/profile" className="block px-3 py-2 text-gray-600 hover:text-green-600">Profile</Link>
             </div>
           </div>
         )}
