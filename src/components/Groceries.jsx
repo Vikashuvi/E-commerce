@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdLocalOffer } from 'react-icons/md';
 import { FaLeaf } from 'react-icons/fa';
 import { FaStar } from 'react-icons/fa';
 import { toast, Toaster } from 'sonner';
 import { useCart } from './CartContext';
+import { useSearch } from './SearchContext';
+import { groceries as groceriesData } from '../data/ProductData';
 
 function Grocerie() {
   const { addToCart } = useCart();
+  const { searchQuery, isSearching } = useSearch();
+  const [filteredGroceries, setFilteredGroceries] = useState(groceriesData);
+
+  // Original data - now we're using the imported data instead
+  /*
   const groceries = [
     {
       id: 1,
@@ -78,6 +85,21 @@ function Grocerie() {
       unit: '250g'
     }
   ];
+  */
+
+  // Filter groceries based on search query
+  useEffect(() => {
+    if (searchQuery && !isSearching) {
+      const filtered = groceriesData.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (item.category && item.category.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
+      setFilteredGroceries(filtered);
+    } else {
+      setFilteredGroceries(groceriesData);
+    }
+  }, [searchQuery, isSearching]);
 
   const handleAddToCart = (groceries) => {
     addToCart(groceries);
@@ -114,8 +136,13 @@ function Grocerie() {
           Fresh Groceries
         </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {groceries.map((groceries) => (
+        {searchQuery && filteredGroceries.length === 0 ? (
+          <div className="text-center py-8">
+            <p className="text-gray-600">No groceries found matching your search.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredGroceries.map((groceries) => (
             <div
               key={groceries.id}
               className="bg-white rounded-lg shadow-md overflow-hidden relative flex flex-col h-[450px]"
@@ -128,7 +155,7 @@ function Grocerie() {
                   </span>
                 </div>
               )}
-              
+
               {groceries.organic && (
                 <div className="absolute top-2 left-2 z-10">
                   <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-green-100 text-green-800">
@@ -170,7 +197,8 @@ function Grocerie() {
               </div>
             </div>
           ))}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

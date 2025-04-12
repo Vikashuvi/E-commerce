@@ -1,12 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdLocalOffer } from 'react-icons/md';
 import { FaLeaf } from 'react-icons/fa';
 import { FaStar } from 'react-icons/fa';
 import { toast, Toaster } from 'sonner';
 import { useCart } from './CartContext';
+import { useSearch } from './SearchContext';
+import { fruits as fruitsData } from '../data/ProductData';
 
 function Fruit() {
   const { addToCart } = useCart();
+  const { searchQuery, isSearching } = useSearch();
+  const [filteredFruits, setFilteredFruits] = useState(fruitsData);
+
+  // Filter fruits based on search query
+  useEffect(() => {
+    if (searchQuery && !isSearching) {
+      const filtered = fruitsData.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (item.category && item.category.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
+      setFilteredFruits(filtered);
+    } else {
+      setFilteredFruits(fruitsData);
+    }
+  }, [searchQuery, isSearching]);
+
+  // Original data - now we're using the imported data instead
+  /*
   const fruits = [
     {
       id: 1,
@@ -66,6 +87,7 @@ function Fruit() {
       description: 'Fresh and juicy grapes, perfect for snacking'
     }
   ];
+  */
 
   const handleAddToCart = (fruit) => {
     addToCart(fruit);
@@ -102,8 +124,13 @@ function Fruit() {
           Fresh Fruits
         </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {fruits.map((fruit) => (
+        {searchQuery && filteredFruits.length === 0 ? (
+          <div className="text-center py-8">
+            <p className="text-gray-600">No fruits found matching your search.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredFruits.map((fruit) => (
             <div
               key={fruit.id}
               className="bg-white rounded-lg shadow-md overflow-hidden relative flex flex-col h-[450px]"
@@ -116,7 +143,7 @@ function Fruit() {
                   </span>
                 </div>
               )}
-              
+
               {fruit.organic && (
                 <div className="absolute top-2 left-2 z-10">
                   <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-green-100 text-green-800">
@@ -158,7 +185,8 @@ function Fruit() {
               </div>
             </div>
           ))}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiShoppingCart, FiUser, FiSearch, FiMenu, FiX } from 'react-icons/fi';
 import { useCart } from './CartContext';
+import { useSearch } from './SearchContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [localSearchQuery, setLocalSearchQuery] = useState('');
   const { getCartCount } = useCart();
+  const { performSearch } = useSearch();
+  const navigate = useNavigate();
   const cartCount = getCartCount();
 
   const toggleMenu = () => {
@@ -15,7 +18,10 @@ const Navbar = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log('Searching for:', searchQuery);
+    if (localSearchQuery.trim()) {
+      performSearch(localSearchQuery.trim());
+      navigate('/search');
+    }
   };
 
   return (
@@ -41,8 +47,8 @@ const Navbar = () => {
               <div className="relative">
                 <input
                   type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  value={localSearchQuery}
+                  onChange={(e) => setLocalSearchQuery(e.target.value)}
                   placeholder="Search products..."
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-green-500"
                 />
